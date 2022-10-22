@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<h2>Sigma Calculator</h2>
+
+<form name = "myForm">
+	<p>Start: <input type="text" name="start" value = "1" onchange="main()"></p>
+	<p>Stop: <input type="text" name="start" value = "10" onchange="main()"></p>
+	<p>Type: <input type="text" name="start" value = "n" onchange="main()"></p>
+	<input type = "button" value = "Generate" onlick="main()">
+</form>
+<h1 id="output"></h1>
+
+<script>
+function main() {
+	let start = document.forms["myform"]["start"].value;
+	let stop = document.forms["myform"]["stop"].value;
+	let type = document.forms["myform"]["type"].value;
+	start = parseInt(start);
+	stop = parseInt(stop);
+	printResult(start, stop , type);
+}
+
+function printResult(start,stop,type) {
+	if ()
+}

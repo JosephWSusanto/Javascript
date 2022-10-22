@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo3"></p>
+
+<script>
+
+let path = "https://api.whatsapp.com/send?phone=";
+let contacts = [ 
+["Budi", "6281218881099"],
+["Joey", "628118162682"],
+["Joshua", "628119123111"],
+               ];
+let msg = "hello!";
+let output = "";
+for (let i=0; i<contacts.length; i++) {
+    let names = contacts[i][0];
+    let numbers = contacts[i][1];
+    output += "<h2>link to " + names + "</h2>";
+    output += "<a href='" + path + numbers + "&text=" + names + ", " + msg + "'>Blast WA</a>";
+    output += "<br>";
+}
+
+document.getElementById("demo3").innerHTML = output;
+
+</script>
+
+</body>
+</html>

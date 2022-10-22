@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Detik Inet</h2>
+
+<p id = "output"></p>
+
+<script>
+
+generatelink();
+
+function generatelink() {
+let news_titles = [ 
+["Bjorka Klaim Jokowi Mau Copot Menkominfo, Ngaku Info Orang Dalam", "security/d-6293115"],  
+  ["Misteri Langit Ukraina Diserbu UFO", "science/d-6293370"],
+  ["Bjorka Terlacak dan Dikejar Pasal Berlapis", "security/d-6305258"],
+  ["Waspadai 7 Alasan Penyebab Kebocoran Data Sering Terjadi!", "security/d-6303662"]];
+
+let output = "";
+for (let i =0; i<news_titles.length; i++) {
+	title = news_titles[i][0];
+	category = news_titles[i][1];
+	text_link = title.toLowerCase();
+	text_link = text_link.replace(/ /g, '-');
+	text_link = text_link.replace(/,/g, '');
+	text_link = text_link.replace(/!/g, '');
+	text_link = text_link.replace('?','');
+	url = "https://inet.detik.com/" + category + "/" + text_link;
+	title_link = "<p><a href = '" + url + "' target='_blank'>" + title + "</a></p>";
+
+	output += title_link;
+}
+
+document.getElementById("output").innerHTML = output;
+
+}
+
+</script>
+</body>
+</html>

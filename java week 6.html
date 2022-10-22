@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+th:nth-child(even),td:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+button {
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 15px, 20px;
+  margin: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+#red {
+  background-color: red;
+}
+</style>
+<body>
+
+<h2>FIFA World Cup 2022</h2>
+<div id="competition"></div>
+<div id="output"></div>
+
+<script>
+
+let ng = 3;
+let nt = 4;
+let nc = 8;
+let table =[ [ [ 0, 0, 0, 0,  0, 0, 0, 0],
+                 [  0, 0, 0, 0,  0, 0, 0, 0],
+                 [  0, 0, 0, 0,  0, 0, 0, 0],
+                 [  0, 0, 0, 0,  0, 0, 0, 0] ],
+               [ [  0, 0, 0, 0,  0, 0, 0, 0],
+                 [  0, 0, 0, 0,  0, 0, 0, 0],
+                 [  0, 0, 0, 0,  0, 0, 0, 0],
+                 [ 0, 0, 0, 0,0, 0,  0, 0] ],
+               [ [ 0, 0, 0, 0, 0, 0, 0, 0],
+                 [ 0, 0, 0, 0, 0, 0, 0, 0],
+                 [ 0, 0, 0, 0, 0, 0, 0, 0],
+                 [  0, 0, 0, 0, 0, 0, 0, 0] ] ];
+
+const team  = [ ["Qatar", "Equador", "Senegal", "Netherlands"],
+                  ["England", "Iran", "USA", "Wales"],
+                  ["Argentina", "Saudi Arabia", "Mexico", "Poland"] ];
+
+  const heading = ["MP", "Wins", "Draws", "Loses", "Goals For", "Goals Against", "Goal Difference", "Pts" ]; 
+  const flags = 
+  [ ["h0FNA5YxLzWChHS5K0o4gw",
+     "AKqvkBpIyr-iLOK7Ig7-yQ",
+     "zw3ac5sIbH4DS6zP5auOkQ",
+     "8GEqzfLegwFFpe6X2BODTg"],
+    ["DTqIL8Ba3KIuxGkpXw5ayA",
+     "1oq8Fy7ETpBpZNaCA22ArQ",
+     "wj9uZvn_vZrelLFGH8fnPA",
+     "1JjnDm6Es30LryHzbudyEw"],
+    ["1xBWyjjkA6vEWopPK3lIPA",
+     "QoAJxO46fHid3_T-7nRZ0Q",
+     "yJF9xqmUGenD8108FJbg9A",
+     "yTS_Piy3M1wUBnqU0n5aAw"] ];
+
+let output = "";
+for (let g=0; g<ng; g++) {
+  output += "<table style='width:100%'>";
+  output += "<tr><th colspan='5'>GROUP " + String.fromCharCode(65+g) + "</th></tr>";
+
+  //heading
+  output += "<tr>";
+  output += "<th width='20'> NO </th>";
+  output += "<th width='140' style='text-align:left'> Team 1</th>";
+  output += "<th width='140' style='text-align:left'> Team 2</th>";
+  output += "<th width='140' style='text-align:left'> Score Team 1</th>";
+  output += "<th width='140' style='text-align:left'> Score Team 2</th>";
+  output += "</tr>";
+  let i =1;
+  for (let t1 = 0; t1<nt-1; t1++) {
+    for (let t2=t1+1; t2<nt; t2++) {
+      let goals_t1 = Math.floor(Math.random() * 9);
+      let goals_t2 = Math.floor(Math.random() * 9);
+
+      if (goals_t1 > goals_t2) {
+        table[g][t1][1] ++;
+        table[g][t2][3] ++;
+      }
+      else if (goals_t2 > goals_t1) {
+        table[g][t2][1] ++;
+        table[g][t1][3] ++;
+      }
+      else {
+        table[g][t1][2] ++;
+        table[g][t1][2] ++;
+      }
+
+      table[g][t1][4] += goals_t1;
+      table[g][t2][4] += goals_t2;
+
+      table[g][t1][5] += goals_t2;
+      table[g][t2][5] += goals_t1;
+
+
+      output += "<tr>"
+      output += "<td>" + i + "</td>"; 
+      i++;
+      output += "<td style='text-align:left'>" + team[g][t1] + "</td>";
+      output += "<td style='text-align:left'>" + team[g][t2] + "</td>";
+      output += "<td style='text-align:left'>" + goals_t1  + "</td>";
+      output += "<td style='text-align:left'>" + goals_t2 + "</td>";
+      output += "</tr>";
+    }
+  }
+  output += "</table>";
+}
+
+for (let g=0; g<ng; g++) {
+  for (let t = 0; t<nt;t++) {
+  //calculate MP, GD, and Pts
+  table[g][t][0]= table[g][t][1] + table[g][t][2] +table[g][t][3]; //MP
+  table[g][t][6]= table[g][t][4] - table[g][t][5]; //GD
+  table[g][t][7]= table[g][t][1] * 3 + table[g][t][2]; //pts
+  }
+}
+
+document.getElementById("competition").innerHTML = output;
+
+// sort teams according to points
+
+for (let g=0; g<ng; g++) {
+  for (let t1 = 0; t1<nt-1; t1++) {
+    for (let t2=t1+1; t2<nt; t2++) {
+      if (table[g][t1][7] < table[g][t2][7]) {
+        let temp_str = team[g][t1]; //temporary string
+        team[g][t1] = team[g][t2];
+        team[g][t2] = temp_str;
+
+        temp_str = flags[g][t1];
+        flags[g][t1] = flags[g][t2];
+        flags[g][t2] = temp_str;
+
+        for (let c=0; c<nc; c++) { //nc = every column in the row
+          let temp_int = table[g][t1][c];
+          table[g][t1][c] = table[g][t2][c];
+          table[g][t2][c] = temp_int;
+
+        }
+      }
+    }
+  }
+}
+
+// sort teams according to goal difference
+
+for (let g=0; g<ng; g++) {
+  for (let t1 = 0; t1<nt-1; t1++) {
+    for (let t2=t1+1; t2<nt; t2++) {
+
+      if (table[g][t1][7] == table[g][t2][7] && table[g][t1][6] < table[g][t2][6]) {
+
+        let temp_str = team[g][t1]; //temporary string
+        team[g][t1] = team[g][t2];
+        team[g][t2] = temp_str;
+
+        temp_str = flags[g][t1];
+        flags[g][t1] = flags[g][t2];
+        flags[g][t2] = temp_str;
+
+        for (let c=0; c<nc; c++) { //nc = every column in the row
+          let temp_int = table[g][t1][c];
+          table[g][t1][c] = table[g][t2][c];
+          table[g][t2][c] = temp_int;
+
+        }
+      }
+    }
+  }
+}
+
+// sort teams according to goals for
+
+for (let g=0; g<ng; g++) {
+  for (let t1 = 0; t1<nt-1; t1++) {
+    for (let t2=t1+1; t2<nt; t2++) {
+
+      if (table[g][t1][7] == table[g][t2][7] && table[g][t1][6] == table[g][t2][6] && table[g][t1][4] < table[g][t2][4]) {
+
+        let temp_str = team[g][t1]; //temporary string
+        team[g][t1] = team[g][t2];
+        team[g][t2] = temp_str;
+
+        temp_str = flags[g][t1];
+        flags[g][t1] = flags[g][t2];
+        flags[g][t2] = temp_str;
+
+        for (let c=0; c<nc; c++) { //nc = every column in the row
+          let temp_int = table[g][t1][c];
+          table[g][t1][c] = table[g][t2][c];
+          table[g][t2][c] = temp_int;
+
+        }
+      }
+    }
+  }
+}
+
+output = "";
+for(let g=0; g<ng; g++) {
+  output += "<table style 'width:100%'>";
+  output += "<tr><th colspan = '11'>GROUP " + String.fromCharCode(65+g) + "</th></tr>";
+
+
+
+  //heading
+  output += "<tr>";
+  output += "<th width = '20'> No </th>";
+  output += "<th width = '20'> Flag </th>";
+  output += "<th width = '140' style = 'text-align:left'> Team </th>";
+  for (let c=0; c<nc; c++)
+	 output += "<th width='80'>" + heading[c] + "</th>";
+  output += "</tr>";
+
+  //table
+  let url = "https://ssl.gstatic.com/onebox/media/sports/logos/";
+  let size = "_96x96.png";
+
+  for (let t = 0; t<nt; t++) {
+	  flag = "<img src='" + url + flags[g][t] + size +"' width='20'>";
+    output += "<tr>";
+    output += "<td>" + (t+1) + "</td>"; //no
+    output += "<td>" + flag + "</td>"; //flag
+    output += "<td style = 'text-align:left'>" + team[g][t] + "</td>"; //team
+    //calculate mp, gp and pts
+    table[g][t][0]= table[g][t][1] + table[g][t][2] + table[g][t][3];
+    table[g][t][6]= table[g][t][4] - table[g][t][5];
+    table[g][t][7]= table[g][t][1] * 3 + table[g][t][2];
+    //print the numbers
+    for (let c = 0; c<nc; c++)
+    	output += "<td>" + table[g][t][c] + "</td>";
+    output += "</tr>";
+  }
+  output += "</table>";
+}
+document.getElementById("output").innerHTML = output;
+   
+
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+th:nth-child(even),td:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+button {
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 15px, 20px;
+  margin: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+#red {
+  background-color: red;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Theatre 1</h2>
+<p><b>Dr Strange: The Multiverse Madness</b></p>
+
+<h2>Ticketing App</h2>
+
+
+<form name="myForm" method="post">
+  Seat: <input type="text" name="seat">
+  <input type="button" value=" Buy " onclick="addSeats()">
+</form>
+
+<p><br></p>
+
+
+<div id="output"></div>
+
+<script>
+
+// 01
+// A2   
+
+let table = []; 
+let seats = ["F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18"];
+
+generateLayout(); 
+
+function checkSeat(seat) {
+  for (let i = 0; i < seats.length; i++) {
+    if (seat == seats[i])
+      return true;
+  }
+  return false;
+}
+
+function addSeats() {
+
+  let nRow = 17;
+  let nCol = 30;
+  
+  let seat = document.forms["myForm"]["seat"].value;
+
+    if (seat.length < 2 || seat.length > 3) {
+    alert("Seat must be 2 or 3 digits");
+    document.forms["myForm"]["seat"].value = "";
+    return false;
+  }  
+  
+  if (seat == "") {
+    alert("Seat must be filled out");
+    document.forms["myForm"]["seat"].value = "";
+    return false;
+  }  
+
+  if (checkSeat(seat)) {
+  alert("Duplicate seat!");
+  document.forms["myForm"]["seat"].value = "";
+  return false;
+}
+
+  let letter = seat.substr(0,1); 
+  rRow = letter.charCodeAt(0) - 64; // 'A' -> 65 - 64 = 1 
+  rCol = parseInt(seat.substr(1));
+  
+  if (rRow == 9 || rRow == 15) {
+    alert("There is no row I or row O");
+    document.forms["myForm"]["seat"].value = "";
+    return false;
+  }  
+  
+  if (rCol < 1 || rCol > nCol) {
+    alert("Col 1-" + nCol);
+    document.forms["myForm"]["seat"].value = "";
+    return false;
+  }  
+  seats.push(seat);
+  alert("Seat number has been inserted");
+  document.forms["myForm"]["seat"].value = "";
+  generateLayout();
+}
+
+function generateLayout() {
+
+  
+  let nRow = 20;
+  let nCol = 30;
+  for (let i=0; i<nRow; i++) { 
+    let line = "";
+    for (let j=0; j<nCol; j++) { 
+      line += "0";
+     }
+    table.push(line);  
+  }   
+
+
+  
+  for (let i = 0; i < seats.length; i++){
+    let seat = seats[i];
+    let letter = seat.substr(0,1); 
+    let r = letter.charCodeAt(0) - 65; // 'A' -> 65 - 65 = 0 
+    let c = parseInt(seat.substr(1))-1; // 3 - 1 = 2
+    let str = table[r].substr(0,c)+"1"+table[r].substr(c+1);
+    table[r] = str;
+  }
+
+
+  let output = "<table style='width:100%'>";
+
+  output += "<tr>";
+  output += "<th> ROW </th>";
+
+  // Generate column 1-20
+  for (let col = 1; col <= nCol; col++)
+    output += "<th>" + col + "</th>";
+  output += "</tr>";
+
+  // Generate row 1-16
+  for (let row = 0; row < nRow; row++) {
+    output += "<tr>"
+    output += "<th>" + String.fromCharCode(65+row) + "</th>"; // A=65 B=66
+    for (let col = 0; col < nCol; col++)
+      if ( table[row][col] == "1" ) // && = and
+        output += "<th> <button id='red'> x </button> </th>"; // red
+      else
+        output += "<th> <button> &nbsp; </button> </th>"; // green
+    output += "</tr>";
+  }
+
+  output += "</table>";
+
+  document.getElementById("output").innerHTML = output;
+
+}
+
+
+
+</script>
+
+</body>
+</html>

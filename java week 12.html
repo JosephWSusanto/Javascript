@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Booleans</h2>
+
+<p id="demo"></p>
+
+<script>
+
+function tossDie(pos, name) {
+  die = Math.floor(Math.random() * 6) + 1; 
+  document.write(name + ": " + pos + " + " + die + " = ");
+  pos = parseInt(pos) + die;
+  document.write(pos);
+  for (let i=0; i<16; i++) {
+    head = boards[0][i];
+    if ( pos == head ) {
+      tail = boards[1][i];
+      pos = tail;
+      if (head > tail)
+        document.write(" - > hit a snake - > " + pos);
+      else
+        document.write(" - > hit a ladder - > " + pos);
+      break;
+    }
+  }  
+  if (pos > 100) {
+    pos = 200 - pos;
+    document.write(" ->" + pos);
+  }
+  if (pos == 100)
+    document.write(" - > WINNER");
+   return pos;
+}
+
+let boards = [ [  1,  4,  9, 17, 21, 28, 51, 54, 62, 64, 72, 80, 87, 93, 94, 98],
+               [ 38, 14, 31, 7 ,42, 84, 67, 34, 19, 60, 91, 99, 36, 73, 75, 79] ];
+let p1 = 0;
+let p2 = 0;
+let output = "";
+let hasWinner = false;
+let r = 1;
+while (!hasWinner) {
+  document.write("Round " + (r++) + "<br>");
+  p1 = tossDie(p1, "Joey");
+  document.write("<br>");
+  p2 = tossDie(p2, "Budi");
+  if (p1 == 100 || p2 == 100)
+    hasWinner = true;
+  document.write("<p>");
+}    
+</script>
+
+</body>
+</html>

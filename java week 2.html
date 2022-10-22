@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+th:nth-child(even),td:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+button {
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 15px, 20px;
+  margin: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+
+#red {
+  background-color: red;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Theatre 1</h2>
+<p><b>Dr Strange: The Multiverse Madness</b></p>
+
+<h2>Ticketing App</h2>
+
+<form name="myForm" method="post">
+  Seat: <input type="text" name="seat">
+  <input type="button" value=" Buy " onclick="generateSeats()">
+</form>
+
+<p><br></p>
+
+<div id="output"></div>
+
+<script>
+
+function generateSeats() {
+
+  let nRow = 17;
+  let nCol = 30;
+  
+  let seat = document.forms["myForm"]["seat"].value;
+  
+  if (seat == "") {
+    alert("Seat must be filled out");
+    return false;
+  }  
+
+  let letter = seat.substr(0,1); 
+  rRow = letter.charCodeAt(0) - 64; // 'A' -> 65 - 64 = 1 
+  rCol = parseInt(seat.substr(1));
+  
+  if (rRow == 9 || rRow == 15) {
+    alert("There is no row I or row O");
+    return false;
+  }  
+  
+  if (rCol < 1 || rCol > nCol) {
+    alert("Col 1-" + nCol);
+    return false;
+  }  
+    
+  let output = "<table style='width:100%'>";
+
+  output += "<tr>";
+  output += "<th> ROW </th>";
+
+  // Generate column 1-20
+  for (let col = 1; col <= nCol; col++)
+    output += "<th>" + col + "</th>";
+  output += "</tr>";
+
+  // Generate row 1-16
+  for (let row = 1; row <= nRow; row++) {
+    if (row == 9 || row == 15) // I = 9 || O = 15
+      continue;
+    output += "<tr>"
+    output += "<th>" + String.fromCharCode(64+row) + "</th>"; // A=65 B=66
+    for (let col = 1; col <= nCol; col++)
+      if ( row == rRow && col == rCol ) // && = and
+        output += "<th> <button id='red'> x </button> </th>"; // red
+      else if ( row >= 5 && col <= 2 ) 
+        output += "<th> &nbsp; </th>"; // empty
+      else
+        output += "<th> <button> &nbsp; </button> </th>"; // green
+    output += "</tr>";
+  }
+
+  output += "</table>";
+
+  document.getElementById("output").innerHTML = output;
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo2"></p>
+
+<script>
+
+let path = "https://www.youtube.com/embed/";
+let trailers = ["zzCZ1W_CUoI", 
+             "yM9sKpQOuEw",
+             "6DBi41reeF0",
+             "eisKxhjBnZ0",
+             "6DxjJzmYsXo"];
+let movies = ["Despicable Me", "Despicable Me 2", "Despicable Me 3", "Minions", "Minions: The Rise of Gru"];
+
+let output = "";
+output += "<table>";
+for (let i = 0; i<trailers.length; i++) {
+	output += "<h2>" + movies[i] + " (trailer)" + "</h2>";
+  output += "<iframe width='400' height='200' src='" + path + trailers[i] + "' title='YouTube video player' frameborder='0' ";
+  output += "allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+  output += "<br>";
+
+}
+
+output += "</table>";
+document.getElementById("demo2").innerHTML = output;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo1"></p>
+
+<script>
+
+let path = "https://ssl.gstatic.com/onebox/media/sports/logos/";
+let size_ext = "_96x96.png";
+let flags = ["DTqIL8Ba3KIuxGkpXw5ayA", 
+             "1JjnDm6Es30LryHzbudyEw",
+             "z3JEQB3coEAGLCJBEUzQ2A",
+             "LaOvu-pyRqRso6uzff55XA",
+             "1xBWyjjkA6vEWopPK3lIPA"];
+let countries = ["England", "Wales", "France", "Denmark", "Argentina"];
+
+let images = "";
+images += "<table>";
+for (let i = 0; i<flags.length; i++) {
+	images += "<tr>";
+	images += "<td valign='center' style='font-size:20pt'>" + (i+1) + ". </td>";
+	images += "<td valign='center'><img src ='" + path + flags[i] + size_ext + "'></td>";
+	images += "<td valign='center' style='font-size:20pt'>" + countries[i] + "</td>";
+	images += "</tr>";
+}
+
+images += "</table>";
+document.getElementById("demo1").innerHTML = images;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<h2>HTML FORMS</h2>
+
+
+<form name="myForm">
+  <br>First name: </br>
+  <input type="text" name="firstname">
+  <br>Last name: </br>
+  <input type="text" name="lastname">
+  <p><input type="button" value=" submit " onclick="greet();"></P>
+</form>
+
+
+<div id="output"></div>
+
+<form name="calculator">
+  <p>
+  <input type="text" name="firstnumber" placeholder="first number">
+  <select name ="operator">
+    <option value="+"> + </option>
+    <option value="-"> - </option>
+    <option value="*"> × </option>
+    <option value="/"> ÷ </option>
+    <option value="%"> % </option>
+  </select>
+  <input type="text" name="secondnumber" placeholder="second number">
+  <input type="button" value=" calculate " onclick="calculate();"> </p>
+</form>
+
+<div id="calculate">
+
+<script>
+  function greet() {
+    let firstname = document.forms["myForm"]["firstname"].value;
+    let lastname = document.forms["myForm"]["lastname"].value;
+    let output = "Hello " + firstname + " " + lastname + "!";
+
+    document.getElementById("output").innerHTML = output;
+  }
+
+  function calculate() {
+    let noutput;
+    let firstnumber = document.forms["calculator"]["firstnumber"].value;
+    let secondnumber = document.forms["calculator"]["secondnumber"].value;
+    let operator = document.forms["calculator"]["operator"].value;
+     switch (operator) {
+      case "+" : noutput = parseInt(firstnumber) + parseInt(secondnumber); break;
+      case "-" : noutput = firstnumber - secondnumber; break;
+      case "*" : noutput = firstnumber * secondnumber; break;
+      case "/" : noutput = firstnumber / secondnumber; break;
+      case "%" : noutput = firstnumber % secondnumber; break;
+     }
+    document.getElementById("calculate").innerHTML = noutput;
+  }
+</script>
+
+</body>
+</html>
